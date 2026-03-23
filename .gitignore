@@ -1,0 +1,48 @@
+# Dependencias
+**/node_modules/
+
+# Builds y artefactos
+**/dist/
+**/coverage/
+**/.angular/
+**/.angular/cache/
+**/.vite/
+**/.cache/
+**/tmp/
+**/out-tsc/
+
+# Variables de entorno (solo se versionan ejemplos)
+**/.env
+**/.env.local
+**/.env.*.local
+!**/.env.example
+
+# Logs y temporales
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+backend_bg_out.log
+backend_bg_err.log
+start_out.log
+start_err.log
+
+# Archivos de sistema / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Evidencias subidas en runtime
+apps/backend/uploads/
+
+# Documentación de trabajo/prompt (no requerida en runtime)
+design/
+AGENTS.md
+AGENTS-CHANGES.md
+AGENTS-CHANGES2.md
+AGENTS-CHANGES3.md
+AGENTS-STITCH.md

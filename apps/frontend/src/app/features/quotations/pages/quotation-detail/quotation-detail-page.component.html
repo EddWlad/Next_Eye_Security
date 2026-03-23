@@ -1,0 +1,83 @@
+<section class="toolbar">
+  <app-page-header
+    title="Detalle de Cotización"
+    subtitle="Visualiza el snapshot comercial y descarga la proforma en PDF."
+  />
+  <a class="btn btn-secondary" routerLink="/quotations">
+    <span class="material-symbols-outlined">arrow_back</span>
+    Volver
+  </a>
+</section>
+
+<app-loading-spinner *ngIf="loading()" />
+
+<section class="card" style="margin-top:.9rem; padding:.95rem;" *ngIf="!loading() && quotation() as quotation">
+  <div class="toolbar" style="align-items:flex-start;">
+    <div>
+      <h3 style="margin:0">{{ quotation.quotationNumber }}</h3>
+      <p style="margin:.25rem 0 0; color:var(--gray-600)">
+        Cliente: {{ quotation.client.nameOrBusinessName }} | Emisión: {{ quotation.issuedAt | date: 'dd/MM/yyyy' }}
+      </p>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-secondary" [routerLink]="['/quotations', quotation.id, 'pdf-preview']">
+        <span class="material-symbols-outlined">picture_as_pdf</span>
+        Preview PDF
+      </a>
+      <a *ngIf="quotation.status === 'BORRADOR'" class="btn btn-secondary" [routerLink]="['/quotations', quotation.id, 'edit']">
+        <span class="material-symbols-outlined">edit</span>
+        Editar borrador
+      </a>
+    </div>
+  </div>
+
+  <div style="margin-top:.6rem; display:flex; align-items:center; gap:.6rem;">
+    <app-status-badge [status]="quotation.status" />
+    <select class="select" style="max-width:220px;" [ngModel]="quotation.status" (ngModelChange)="updateStatus($event)">
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
+  </div>
+
+  <div class="table-wrapper" style="margin-top:.8rem;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>P. Unitario</th>
+          <th>IVA %</th>
+          <th>Margen %</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of quotation.details">
+          <td>{{ item.itemType }}</td>
+          <td>{{ item.descriptionFrozen }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ money(item.unitPriceFinal, quotation.currency) }}</td>
+          <td>{{ item.vatPercentHistorical }}</td>
+          <td>{{ item.marginPercentHistorical }}</td>
+          <td>{{ money(item.lineTotal, quotation.currency) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:.8rem; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem;">
+    <article class="card" style="padding:.75rem;">
+      <strong>Observaciones</strong>
+      <p style="margin:.35rem 0 0; color:var(--gray-600)">{{ quotation.observations || 'Sin observaciones' }}</p>
+    </article>
+
+    <article class="card" style="padding:.75rem;">
+      <strong>Resumen</strong>
+      <p style="margin:.35rem 0;">Subtotal: {{ money(quotation.subtotal, quotation.currency) }}</p>
+      <p style="margin:.35rem 0;">Descuento: {{ money(quotation.discount, quotation.currency) }}</p>
+      <p style="margin:.35rem 0;">IVA: {{ money(quotation.vatValueHistorical, quotation.currency) }}</p>
+      <p style="margin:.35rem 0; font-weight:700;">Total: {{ money(quotation.total, quotation.currency) }}</p>
+    </article>
+  </div>
+</section>

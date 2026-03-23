@@ -1,0 +1,52 @@
+.quotation-grid {
+  margin-top: .9rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .9rem;
+}
+
+.summary-card {
+  padding: .95rem;
+  width: min(100%, 360px);
+  justify-self: end;
+}
+
+.summary-card dl {
+  margin: 0;
+  display: grid;
+  gap: .45rem;
+}
+
+.summary-card div {
+  display: flex;
+  justify-content: space-between;
+  font-size: .9rem;
+}
+
+.summary-card dt,
+.summary-card dd {
+  margin: 0;
+}
+
+.summary-card .total {
+  margin-top: .35rem;
+  padding-top: .45rem;
+  border-top: 1px solid #e5e7eb;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+:host ::ng-deep .line-total-col {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+:host ::ng-deep td.line-total-col {
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .summary-card {
+    width: 100%;
+  }
+}

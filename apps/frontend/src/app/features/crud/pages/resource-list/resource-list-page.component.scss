@@ -1,0 +1,39 @@
+.confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(15 23 42 / 45%);
+  display: grid;
+  place-items: center;
+  z-index: 60;
+  padding: 1rem;
+}
+
+.confirm-modal {
+  width: min(460px, 100%);
+  padding: 1rem;
+}
+
+.confirm-modal h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.confirm-modal p {
+  margin: .6rem 0 0;
+  color: var(--gray-700, #374151);
+}
+
+.confirm-modal .warning {
+  color: #991b1b;
+  font-weight: 600;
+}
+
+.product-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #f8fafc;
+  display: block;
+}

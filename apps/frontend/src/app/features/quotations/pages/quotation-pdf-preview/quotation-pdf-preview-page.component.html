@@ -1,0 +1,26 @@
+<section class="toolbar">
+  <app-page-header
+    title="Vista Previa de PDF"
+    subtitle="Revisión final de proforma para impresión y descarga."
+  />
+  <div class="actions">
+    <a class="btn btn-secondary" [routerLink]="['/quotations', quotationId]">
+      <span class="material-symbols-outlined">arrow_back</span>
+      Volver
+    </a>
+    <button class="btn btn-secondary" type="button" (click)="print()">
+      <span class="material-symbols-outlined">print</span>
+      Imprimir
+    </button>
+    <button class="btn btn-primary" type="button" (click)="download()">
+      <span class="material-symbols-outlined">download</span>
+      Descargar
+    </button>
+  </div>
+</section>
+
+<app-loading-spinner *ngIf="loading()" />
+
+<section class="pdf-card card" *ngIf="!loading()">
+  <iframe *ngIf="safePdfUrl()" [src]="safePdfUrl()"></iframe>
+</section>
