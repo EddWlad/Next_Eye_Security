@@ -112,7 +112,7 @@
       </button>
     </div>
 
-    <div class="table-wrapper">
+    <div class="table-wrapper quotation-items-wrapper">
       <table class="table quotation-items-table">
         <thead>
           <tr>
@@ -128,13 +128,13 @@
         </thead>
         <tbody formArrayName="items">
           <tr *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
-            <td>
+            <td data-label="Tipo">
               <select class="select" formControlName="itemType">
                 <option value="PRODUCTO">PRODUCTO</option>
                 <option value="SERVICIO">SERVICIO</option>
               </select>
             </td>
-            <td>
+            <td data-label="Producto/Servicio">
               <ng-container *ngIf="item.value.itemType === 'PRODUCTO'; else serviceSelector">
                 <select class="select" formControlName="productId">
                   <option value="">Seleccionar producto</option>
@@ -148,20 +148,20 @@
                 </select>
               </ng-template>
             </td>
-            <td><input class="input" formControlName="description" /></td>
-            <td><input class="input" type="number" min="1" step="1" formControlName="quantity" /></td>
-            <td>
+            <td data-label="Descripción"><input class="input" formControlName="description" /></td>
+            <td data-label="Cant."><input class="input" type="number" min="1" step="1" formControlName="quantity" /></td>
+            <td data-label="IVA %">
               <select class="select" formControlName="vatPercent">
                 <option *ngFor="let vat of vatOptions()" [value]="vat">{{ vat }}</option>
               </select>
             </td>
-            <td>
+            <td data-label="Margen %">
               <select class="select" formControlName="marginPercent">
                 <option *ngFor="let margin of marginOptions()" [value]="margin">{{ margin }}</option>
               </select>
             </td>
-            <td class="line-total-col">{{ lineTotal(i) }}</td>
-            <td>
+            <td class="line-total-col" data-label="Total línea">{{ lineTotal(i) }}</td>
+            <td data-label="Acciones">
               <button class="btn btn-sm btn-danger" type="button" (click)="removeItem(i)">
                 <span class="material-symbols-outlined">delete</span>
               </button>

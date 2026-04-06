@@ -20,6 +20,9 @@ import { Component, Input } from '@angular/core';
       gap: 0.42rem;
       color: var(--gray-600);
       font-size: .8rem;
+      max-width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
     }
 
     .sep {
