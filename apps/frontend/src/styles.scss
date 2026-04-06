@@ -26,6 +26,7 @@ body {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(180deg, #f9fafb 0%, #f1f3f6 100%);
   color: var(--gray-900);
+  overflow-x: hidden;
 }
 
 button,
@@ -243,5 +244,23 @@ a {
   .grid-2,
   .grid-3 {
     grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    align-items: stretch;
+  }
+
+  .toolbar > .btn {
+    width: 100%;
+  }
+
+  .table {
+    min-width: 620px;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.58rem 0.62rem;
+    font-size: 0.8rem;
   }
 }

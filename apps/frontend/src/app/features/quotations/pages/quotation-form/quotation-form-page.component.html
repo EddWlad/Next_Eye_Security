@@ -38,8 +38,8 @@
     </table>
   </div>
 
-  <form [formGroup]="statusForm" (ngSubmit)="submitStatusUpdate()" style="margin-top:.9rem; display:flex; gap:.7rem; align-items:flex-end;">
-    <div class="field" style="max-width: 220px;">
+  <form [formGroup]="statusForm" (ngSubmit)="submitStatusUpdate()" class="status-update-form">
+    <div class="field status-field">
       <label for="status">Estado</label>
       <select class="select" id="status" formControlName="status">
         <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
@@ -104,7 +104,7 @@
   </section>
 
   <section class="card" style="padding:.95rem;">
-    <div class="toolbar" style="margin-bottom:.65rem;">
+    <div class="toolbar items-toolbar">
       <h3 style="margin:0">Detalle de Ítems</h3>
       <button class="btn btn-secondary" type="button" (click)="addItem()">
         <span class="material-symbols-outlined">add</span>
@@ -113,7 +113,7 @@
     </div>
 
     <div class="table-wrapper">
-      <table class="table" style="min-width: 980px;">
+      <table class="table quotation-items-table">
         <thead>
           <tr>
             <th>Tipo</th>

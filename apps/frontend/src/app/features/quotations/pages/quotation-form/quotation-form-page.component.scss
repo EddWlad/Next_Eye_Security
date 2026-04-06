@@ -5,6 +5,26 @@
   gap: .9rem;
 }
 
+.status-update-form {
+  margin-top: .9rem;
+  display: flex;
+  gap: .7rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.status-field {
+  max-width: 220px;
+}
+
+.items-toolbar {
+  margin-bottom: .65rem;
+}
+
+.quotation-items-table {
+  min-width: 940px;
+}
+
 .summary-card {
   padding: .95rem;
   width: min(100%, 360px);
@@ -46,7 +66,35 @@
 }
 
 @media (max-width: 900px) {
+  .status-update-form {
+    align-items: stretch;
+  }
+
+  .status-field {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .status-update-form .btn {
+    width: 100%;
+  }
+
   .summary-card {
     width: 100%;
+    justify-self: stretch;
+  }
+
+  .items-toolbar .btn {
+    width: 100%;
+  }
+
+  .quotation-items-table {
+    min-width: 760px;
+  }
+}
+
+@media (max-width: 520px) {
+  .quotation-items-table {
+    min-width: 680px;
   }
 }

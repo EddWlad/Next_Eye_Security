@@ -1,8 +1,6 @@
 <section class="toolbar">
-  <app-page-header
-    title="Detalle de Cotización"
-    subtitle="Visualiza el snapshot comercial y descarga la proforma en PDF."
-  />
+  <app-page-header title="Detalle de Cotización"
+    subtitle="Visualiza el snapshot comercial y descarga la proforma en PDF." />
   <a class="btn btn-secondary" routerLink="/quotations">
     <span class="material-symbols-outlined">arrow_back</span>
     Volver
@@ -25,7 +23,8 @@
         <span class="material-symbols-outlined">picture_as_pdf</span>
         Preview PDF
       </a>
-      <a *ngIf="quotation.status === 'BORRADOR'" class="btn btn-secondary" [routerLink]="['/quotations', quotation.id, 'edit']">
+      <a *ngIf="quotation.status === 'BORRADOR'" class="btn btn-secondary"
+        [routerLink]="['/quotations', quotation.id, 'edit']">
         <span class="material-symbols-outlined">edit</span>
         Editar borrador
       </a>

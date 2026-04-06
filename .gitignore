@@ -41,6 +41,7 @@ apps/backend/uploads/
 
 # Documentación de trabajo/prompt (no requerida en runtime)
 design/
+AWS-NextEyeSecurity/
 AGENTS.md
 AGENTS-CHANGES.md
 AGENTS-CHANGES2.md

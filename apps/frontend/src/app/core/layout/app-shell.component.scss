@@ -159,7 +159,7 @@
   transition: opacity .2s ease;
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 1200px) {
   .shell {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: 'content';
@@ -167,11 +167,11 @@
 
   .sidebar {
     position: fixed;
-    left: -300px;
+    left: -280px;
     top: 0;
     bottom: 0;
     z-index: 40;
-    width: 280px;
+    width: 260px;
     transition: .25s ease;
   }
 
@@ -186,5 +186,34 @@
 
   .menu-toggle {
     display: grid;
+  }
+
+  .content-area {
+    padding: .75rem;
+  }
+
+  .topbar {
+    min-height: 58px;
+    height: auto;
+    gap: .5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .content-area {
+    padding: .55rem;
+  }
+
+  .topbar {
+    padding: .55rem .65rem;
+  }
+
+  .topbar :is(.btn, .menu-toggle) {
+    flex: 0 0 auto;
+  }
+
+  .sidebar {
+    width: min(82vw, 260px);
+    left: -90vw;
   }
 }
