@@ -10,15 +10,15 @@
 </section>
 
 <section class="card" style="margin-top: .9rem; padding: .8rem;">
-  <div class="toolbar" style="margin-bottom: .65rem;">
+  <div class="toolbar quotations-filters-toolbar" style="margin-bottom: .65rem;">
     <input
-      class="input"
+      class="input quotations-search-input"
       style="max-width: 320px;"
       placeholder="Buscar por cliente o número"
       [ngModel]="query()"
       (ngModelChange)="query.set($event)"
     />
-    <select class="select" style="max-width: 220px;" [ngModel]="status()" (ngModelChange)="status.set($event)">
+    <select class="select quotations-status-filter" style="max-width: 220px;" [ngModel]="status()" (ngModelChange)="status.set($event)">
       <option value="">Todos los estados</option>
       <option *ngFor="let item of statuses" [value]="item">{{ item }}</option>
     </select>
@@ -27,7 +27,7 @@
   <app-loading-spinner *ngIf="loading()" />
 
   <div class="table-wrapper" *ngIf="!loading() && filtered().length">
-    <table class="table">
+    <table class="table quotations-table">
       <thead>
         <tr>
           <th>Número</th>
@@ -42,14 +42,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let quotation of filtered()">
-          <td>{{ quotation.quotationNumber }}</td>
-          <td>{{ quotation.client.nameOrBusinessName }}</td>
-          <td>{{ quotation.issuedAt | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ quotation.validUntil | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ money(quotation.subtotal, quotation.currency) }}</td>
-          <td>{{ money(quotation.total, quotation.currency) }}</td>
-          <td><app-status-badge [status]="quotation.status" /></td>
-          <td>
+          <td data-label="Número">{{ quotation.quotationNumber }}</td>
+          <td data-label="Cliente">{{ quotation.client.nameOrBusinessName }}</td>
+          <td data-label="Fecha">{{ quotation.issuedAt | date: 'dd/MM/yyyy' }}</td>
+          <td data-label="Vigencia">{{ quotation.validUntil | date: 'dd/MM/yyyy' }}</td>
+          <td data-label="Subtotal">{{ money(quotation.subtotal, quotation.currency) }}</td>
+          <td data-label="Total">{{ money(quotation.total, quotation.currency) }}</td>
+          <td data-label="Estado"><app-status-badge [status]="quotation.status" /></td>
+          <td data-label="Acciones">
             <div class="actions">
               <a class="btn btn-sm btn-secondary" [routerLink]="['/quotations', quotation.id]">
                 <span class="material-symbols-outlined">visibility</span>

@@ -27,6 +27,7 @@ import { ActivatedRoute } from '@angular/router';
     LoadingSpinnerComponent,
   ],
   templateUrl: './quotation-detail-page.component.html',
+  styleUrl: './quotation-detail-page.component.scss',
 })
 export class QuotationDetailPageComponent {
   private readonly route = inject(ActivatedRoute);

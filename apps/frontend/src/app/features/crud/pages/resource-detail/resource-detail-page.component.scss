@@ -25,3 +25,13 @@
 .masked-password {
   letter-spacing: .12rem;
 }
+
+@media (max-width: 780px) {
+  .user-attributes {
+    gap: .7rem;
+  }
+
+  .user-field {
+    padding: .6rem .62rem;
+  }
+}

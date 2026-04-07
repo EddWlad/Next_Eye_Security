@@ -5,6 +5,10 @@
   gap: .9rem;
 }
 
+.quotation-grid > * {
+  min-width: 0;
+}
+
 .status-update-form {
   margin-top: .9rem;
   display: flex;
@@ -94,6 +98,10 @@
 }
 
 @media (max-width: 640px) {
+  .quotation-grid {
+    gap: .72rem;
+  }
+
   .items-toolbar {
     align-items: stretch;
   }
@@ -150,6 +158,10 @@
   }
 
   .quotation-items-table td[data-label='Acciones'] .btn {
+    width: 100%;
+  }
+
+  .quotation-items-table td :is(.input, .select, .textarea) {
     width: 100%;
   }
 

@@ -131,8 +131,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: .6rem;
   padding: .7rem .9rem;
   margin-bottom: 1rem;
+  min-width: 0;
+}
+
+.topbar app-breadcrumbs {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.topbar > .btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .menu-toggle {
@@ -205,11 +217,21 @@
   }
 
   .topbar {
-    padding: .55rem .65rem;
+    padding: .52rem .6rem;
+    min-height: 54px;
   }
 
   .topbar :is(.btn, .menu-toggle) {
     flex: 0 0 auto;
+  }
+
+  .topbar > .btn {
+    padding: .42rem .58rem;
+    font-size: .76rem;
+  }
+
+  .topbar > .btn .material-symbols-outlined {
+    font-size: 1.05rem;
   }
 
   .sidebar {

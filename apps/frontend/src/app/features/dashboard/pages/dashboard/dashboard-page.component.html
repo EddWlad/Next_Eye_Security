@@ -31,7 +31,7 @@
     </header>
 
     <div class="table-wrapper" *ngIf="state().quotations.length; else noQuotes">
-      <table class="table">
+      <table class="table dashboard-quotes-table">
         <thead>
           <tr>
             <th>Número</th>
@@ -43,11 +43,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let quotation of state().quotations">
-            <td>{{ quotation.quotationNumber }}</td>
-            <td>{{ quotation.client.nameOrBusinessName }}</td>
-            <td>{{ quotation.issuedAt | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ money(quotation.total) }}</td>
-            <td><app-status-badge [status]="quotation.status" /></td>
+            <td data-label="Número">{{ quotation.quotationNumber }}</td>
+            <td data-label="Cliente">{{ quotation.client.nameOrBusinessName }}</td>
+            <td data-label="Fecha">{{ quotation.issuedAt | date: 'dd/MM/yyyy' }}</td>
+            <td data-label="Total">{{ money(quotation.total) }}</td>
+            <td data-label="Estado"><app-status-badge [status]="quotation.status" /></td>
           </tr>
         </tbody>
       </table>

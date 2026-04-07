@@ -67,3 +67,20 @@
   color: #6b7280;
   font-size: .78rem;
 }
+
+@media (max-width: 780px) {
+  .product-upload-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .product-dropzone {
+    width: 100%;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .product-upload-actions .btn {
+    width: 100%;
+  }
+}

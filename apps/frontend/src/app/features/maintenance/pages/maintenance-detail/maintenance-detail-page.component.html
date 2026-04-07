@@ -3,7 +3,7 @@
     title="Detalle de Mantenimiento"
     subtitle="Controla el historial técnico, comentarios y evidencias del servicio."
   />
-  <div class="actions">
+  <div class="actions maintenance-header-actions">
     <a class="btn btn-secondary" routerLink="/maintenance">
       <span class="material-symbols-outlined">arrow_back</span>
       Volver
@@ -18,16 +18,16 @@
 <app-loading-spinner *ngIf="loading()" />
 
 <section class="detail-grid" *ngIf="!loading() && maintenance() as maintenance">
-  <article class="card" style="padding:.95rem;">
-    <h3 style="margin-top:0">{{ maintenance.client.nameOrBusinessName }}</h3>
-    <p style="margin:0; color:var(--gray-600)">{{ maintenance.intervenedSystem }}</p>
+  <article class="card maintenance-main-card">
+    <h3 class="maintenance-title">{{ maintenance.client.nameOrBusinessName }}</h3>
+    <p class="maintenance-subtitle">{{ maintenance.intervenedSystem }}</p>
 
-    <div style="margin-top:.7rem; display:flex; gap:.55rem; align-items:center;">
+    <div class="maintenance-status-row">
       <app-status-badge [status]="maintenance.status" />
       <app-status-badge [status]="maintenance.type" />
     </div>
 
-    <div class="grid-2" style="margin-top:.7rem;">
+    <div class="grid-2 maintenance-info-grid">
       <article class="card info-card">
         <strong>Técnico</strong>
         <p>{{ maintenance.technician.fullName }}</p>
@@ -51,7 +51,7 @@
     </div>
   </article>
 
-  <article class="card" style="padding:.95rem;">
+  <article class="card maintenance-comments-card">
     <h3 style="margin-top:0">Comentarios Técnicos</h3>
     <div class="timeline" *ngIf="comments().length; else noComments">
       <article *ngFor="let comment of comments()" class="timeline-item">
@@ -64,19 +64,19 @@
       <p style="color:var(--gray-600)">No hay comentarios registrados.</p>
     </ng-template>
 
-    <form [formGroup]="commentForm" (ngSubmit)="addComment()" style="margin-top:.7rem;">
+    <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="maintenance-comment-form">
       <div class="field">
         <label for="comment">Agregar comentario</label>
         <textarea class="textarea" id="comment" rows="2" formControlName="comment"></textarea>
       </div>
-      <button class="btn btn-primary" type="submit" style="margin-top:.55rem;">
+      <button class="btn btn-primary maintenance-comment-btn" type="submit">
         <span class="material-symbols-outlined">send</span>
         Guardar comentario
       </button>
     </form>
   </article>
 
-  <article class="card" style="padding:.95rem; grid-column: 1 / -1;">
+  <article class="card maintenance-attachments-card">
     <h3 style="margin-top:0">Adjuntos / Evidencias</h3>
 
     <div class="table-wrapper" *ngIf="attachments().length">
@@ -93,12 +93,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let attachment of attachments()">
-            <td>{{ attachment.originalName }}</td>
-            <td>{{ attachment.mimeType }}</td>
-            <td>{{ attachment.storagePath }}</td>
-            <td>{{ attachment.size }}</td>
-            <td>{{ attachment.uploadedBy }}</td>
-            <td>
+            <td data-label="Archivo original">{{ attachment.originalName }}</td>
+            <td data-label="MIME">{{ attachment.mimeType }}</td>
+            <td data-label="Ruta">{{ attachment.storagePath }}</td>
+            <td data-label="Tamaño">{{ attachment.size }}</td>
+            <td data-label="Subido por">{{ attachment.uploadedBy }}</td>
+            <td data-label="Acciones">
               <button
                 class="btn btn-sm btn-secondary"
                 type="button"
@@ -112,7 +112,7 @@
       </table>
     </div>
 
-    <div style="margin-top:.8rem;">
+    <div class="attachment-upload-block">
       <div class="field">
         <label>Seleccionar evidencia</label>
         <input
@@ -145,7 +145,7 @@
         </div>
       </div>
 
-      <p *ngIf="selectedFiles().length" style="margin:.45rem 0 0; color:var(--gray-600);">
+      <p *ngIf="selectedFiles().length" class="attachment-size-info">
         Tamaño total: <strong>{{ selectedFilesTotalSize() }}</strong> bytes
       </p>
     </div>

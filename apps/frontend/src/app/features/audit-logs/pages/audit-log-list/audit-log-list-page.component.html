@@ -10,23 +10,23 @@
 </section>
 
 <section class="card" style="margin-top:.9rem; padding:.8rem;">
-  <div class="toolbar" style="margin-bottom:.65rem;">
+  <div class="toolbar audit-filters-toolbar" style="margin-bottom:.65rem;">
     <input
-      class="input"
+      class="input audit-filter-input"
       style="max-width:220px;"
       placeholder="Módulo"
       [ngModel]="moduleFilter()"
       (ngModelChange)="moduleFilter.set($event)"
     />
     <input
-      class="input"
+      class="input audit-filter-input"
       style="max-width:220px;"
       placeholder="Usuario"
       [ngModel]="userFilter()"
       (ngModelChange)="userFilter.set($event)"
     />
     <input
-      class="input"
+      class="input audit-filter-input"
       style="max-width:220px;"
       placeholder="Acción"
       [ngModel]="actionFilter()"
@@ -37,7 +37,7 @@
   <app-loading-spinner *ngIf="loading()" />
 
   <div class="table-wrapper" *ngIf="!loading() && filtered().length">
-    <table class="table">
+    <table class="table audit-table">
       <thead>
         <tr>
           <th>Fecha</th>
@@ -50,12 +50,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let row of filtered()">
-          <td>{{ row.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-          <td>{{ row.module }}</td>
-          <td>{{ row.entity }}</td>
-          <td>{{ row.action }}</td>
-          <td>{{ row.user }}</td>
-          <td>{{ row.summary }}</td>
+          <td data-label="Fecha">{{ row.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td data-label="Módulo">{{ row.module }}</td>
+          <td data-label="Entidad">{{ row.entity }}</td>
+          <td data-label="Acción">{{ row.action }}</td>
+          <td data-label="Usuario">{{ row.user }}</td>
+          <td data-label="Resumen">{{ row.summary }}</td>
         </tr>
       </tbody>
     </table>

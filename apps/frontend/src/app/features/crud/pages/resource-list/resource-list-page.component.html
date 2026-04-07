@@ -7,9 +7,9 @@
 </section>
 
 <section class="card" style="margin-top: .9rem; padding: .8rem;">
-  <div class="toolbar" style="margin-bottom: .65rem;">
+  <div class="toolbar resource-filters-toolbar" style="margin-bottom: .65rem;">
     <input
-      class="input"
+      class="input resource-search-input"
       style="max-width: 360px;"
       placeholder="Buscar por cualquier campo"
       [ngModel]="query()"
@@ -24,7 +24,7 @@
   <app-loading-spinner *ngIf="loading()" text="Cargando datos..." />
 
   <div class="table-wrapper" *ngIf="!loading() && filteredRows().length">
-    <table class="table">
+    <table class="table resource-table">
       <thead>
         <tr>
           <th *ngFor="let column of columns()">{{ column.label }}</th>
@@ -33,7 +33,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let row of filteredRows()">
-          <td *ngFor="let column of columns()">
+          <td *ngFor="let column of columns()" [attr.data-label]="column.label">
             <ng-container [ngSwitch]="column.key">
               <app-status-badge *ngSwitchCase="'active'" [status]="row[column.key] ? 'ACTIVO' : 'INACTIVO'" />
               <ng-container *ngSwitchCase="'imageUrl'">
@@ -47,7 +47,7 @@
               <span *ngSwitchDefault>{{ getCellValue(row, column.key) }}</span>
             </ng-container>
           </td>
-          <td>
+          <td data-label="Acciones">
             <div class="actions">
               <button class="btn btn-sm btn-secondary" type="button" (click)="view(asId(row['id']))">
                 <span class="material-symbols-outlined">visibility</span>

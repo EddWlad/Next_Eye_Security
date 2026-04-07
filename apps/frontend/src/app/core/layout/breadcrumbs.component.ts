@@ -23,6 +23,12 @@ import { Component, Input } from '@angular/core';
       max-width: 100%;
       overflow-x: auto;
       white-space: nowrap;
+      min-width: 0;
+      scrollbar-width: none;
+    }
+
+    .crumbs::-webkit-scrollbar {
+      display: none;
     }
 
     .sep {
@@ -32,6 +38,13 @@ import { Component, Input } from '@angular/core';
     .current {
       color: var(--gray-900);
       font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .crumbs {
+        font-size: .72rem;
+        gap: .3rem;
+      }
     }
   `,
 })

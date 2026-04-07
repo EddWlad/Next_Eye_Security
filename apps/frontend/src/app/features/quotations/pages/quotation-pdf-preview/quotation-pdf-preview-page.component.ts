@@ -7,6 +7,7 @@ import { LoadingSpinnerComponent } from '../../../../shared/components/loading-s
 import { PageHeaderComponent } from '../../../../shared/components/page-header.component';
 import { QuotationsService } from '../../services/quotations.service';
 import { Quotation } from '../../../../core/models/entities.models';
+import { toMoney } from '../../../../core/utils/format.util';
 
 @Component({
   selector: 'app-quotation-pdf-preview-page',
@@ -23,13 +24,17 @@ export class QuotationPdfPreviewPageComponent implements OnDestroy {
   readonly loading = signal(true);
   readonly safePdfUrl = signal<SafeResourceUrl | null>(null);
   readonly fileName = signal('cotizacion.pdf');
+  readonly quotation = signal<Quotation | null>(null);
   private objectUrl: string | null = null;
 
   readonly quotationId = this.route.snapshot.paramMap.get('id') ?? '';
 
   constructor() {
     this.quotationsService.findOne(this.quotationId).subscribe({
-      next: (quotation) => this.fileName.set(this.buildFileName(quotation)),
+      next: (quotation) => {
+        this.quotation.set(quotation);
+        this.fileName.set(this.buildFileName(quotation));
+      },
     });
 
     this.quotationsService.getPdfBlob(this.quotationId).subscribe({
@@ -39,6 +44,10 @@ export class QuotationPdfPreviewPageComponent implements OnDestroy {
       },
       complete: () => this.loading.set(false),
     });
+  }
+
+  money(value: string, currency: string): string {
+    return toMoney(value, currency);
   }
 
   download(): void {

@@ -441,11 +441,13 @@ export class QuotationsService {
       const vatDisplay = Number(quotation.vatValueHistorical);
       const totalDisplay = Number(quotation.total);
 
-      const headerColor = '#5B1126';
-      const accentColor = '#9CA3AF';
-      const borderColor = '#D9E0EA';
-      const textColor = '#1B2430';
-      const mutedTextColor = '#5A6472';
+      const pageBgColor = '#F2F2F2';
+      const cardBgColor = '#FFFFFF';
+      const headerColor = '#6A6A6A';
+      const accentColor = '#5B1126';
+      const borderColor = '#A6A6A6';
+      const textColor = '#000000';
+      const mutedTextColor = '#4D4D4D';
 
       const bundledLogoCandidates = [
         path.resolve(process.cwd(), 'src', 'assets', 'logo-pdf.png'),
@@ -483,18 +485,19 @@ export class QuotationsService {
           : null;
       const drawHeader = (isFirstPage: boolean) => {
         doc.save();
-        doc.rect(0, 0, pageWidth, 120).fill(headerColor);
-        doc.rect(0, 112, pageWidth, 8).fill(accentColor);
+        doc.rect(0, 0, pageWidth, pageHeight).fill(pageBgColor);
+        doc.rect(0, 0, pageWidth, 110).fill(headerColor);
+        doc.rect(0, 110, pageWidth, 10).fill(accentColor);
         doc.restore();
 
-        const logoBoxX = margin;
-        const logoBoxY = 18;
+        const logoBoxX = margin - 2;
+        const logoBoxY = 10;
         let logoDrawn = false;
 
         if (logoPng && fs.existsSync(logoPng)) {
           try {
             doc.image(logoPng, logoBoxX, logoBoxY, {
-              fit: [190, 84],
+              fit: [138, 92],
               valign: 'center',
             });
             logoDrawn = true;
@@ -506,42 +509,59 @@ export class QuotationsService {
         if (!logoDrawn) {
           doc
             .font('Helvetica-Bold')
-            .fontSize(24)
+            .fontSize(20)
             .fillColor('white')
-            .text('NEXT EYE', logoBoxX, 35)
-            .fontSize(12)
-            .text('SECURITY', logoBoxX, 63);
+            .text('NEXT EYE', logoBoxX, 30)
+            .fontSize(11)
+            .text('SECURITY', logoBoxX, 56);
         }
+
+        const companyInfoX = margin + 122;
+        const companyInfoW = 220;
+        const rightInfoW = 220;
+        const rightInfoX = pageWidth - margin - rightInfoW;
 
         doc
           .font('Helvetica-Bold')
-          .fontSize(19)
+          .fontSize(17)
           .fillColor('white')
-          .text('NEXT EYE SECURITY', margin + 156, 45, {
-            width: 220,
-            align: 'left',
+          .text('NEXT EYE SECURITY', companyInfoX, 30, {
+            width: companyInfoW,
+            align: 'center',
           });
 
         doc
-          .font('Helvetica-Bold')
-          .fontSize(24)
-          .fillColor('white')
-          .text('COTIZACIÓN', margin + 300, 28, { width: 240, align: 'right' })
-          .fontSize(11)
           .font('Helvetica')
-          .fillColor('#EAF3FF')
-          .text('/ PROFORMA', margin + 300, 58, { width: 240, align: 'right' });
+          .fontSize(10.5)
+          .fillColor('#F5F5F5')
+          .text('Tu aliado en seguridad', companyInfoX, 54, {
+            width: companyInfoW,
+            align: 'center',
+          });
 
         doc
           .font('Helvetica')
-          .fontSize(10)
-          .fillColor('#EAF3FF')
-          .text(`No: ${quotation.quotationNumber}`, margin + 300, 78, {
-            width: 240,
+          .fontSize(10.2)
+          .fillColor('#FFFFFF')
+          .text(`No: ${quotation.quotationNumber}`, rightInfoX, 18, {
+            width: rightInfoW,
             align: 'right',
           })
-          .text(`Fecha: ${quotation.issuedAt}`, margin + 300, 92, {
-            width: 240,
+          .text(`Fecha: ${quotation.issuedAt}`, rightInfoX, 33, {
+            width: rightInfoW,
+            align: 'right',
+          })
+          .fontSize(8.9)
+          .text('RUC: 1717345407001', rightInfoX, 51, {
+            width: rightInfoW,
+            align: 'right',
+          })
+          .text('Dirección: De los Guabos y Av. El Inca', rightInfoX, 65, {
+            width: rightInfoW,
+            align: 'right',
+          })
+          .text('Teléfono: 0969379333', rightInfoX, 79, {
+            width: rightInfoW,
             align: 'right',
           });
 
@@ -550,19 +570,19 @@ export class QuotationsService {
             .font('Helvetica-Bold')
             .fontSize(11)
             .fillColor(textColor)
-            .text(`Cotización ${quotation.quotationNumber}`, margin, 132);
+            .text(`Cotización ${quotation.quotationNumber}`, margin, 136);
         }
       };
 
       drawHeader(true);
 
-      let y = 136;
+      let y = 140;
       doc
         .roundedRect(margin, y, contentWidth, 92, 8)
         .lineWidth(1)
         .strokeColor(borderColor)
-        .fillColor('#F8FAFC')
-        .fillAndStroke('#F8FAFC', borderColor);
+        .fillColor(cardBgColor)
+        .fillAndStroke(cardBgColor, borderColor);
 
       doc
         .font('Helvetica-Bold')
@@ -593,22 +613,31 @@ export class QuotationsService {
         .text(`Dirección: ${quotation.client.address}`, margin + 320, y + 32, {
           width: 230,
         })
-        .text(`Ciudad: ${quotation.client.city}`, margin + 320, y + 62, {
+        .text(`Ciudad: ${quotation.client.city}`, margin + 320, y + 50, {
           width: 230,
         })
-        .text(`Vigencia: ${quotation.validUntil}`, margin + 320, y + 76, {
+        .text(`Vigencia: ${quotation.validUntil}`, margin + 320, y + 66, {
           width: 230,
-        });
+        })
+        .text(
+          `Asesor: ${quotation.createdByUser?.fullName ?? quotation.createdByUser?.email ?? 'Equipo comercial'}`,
+          margin + 320,
+          y + 82,
+          {
+            width: 230,
+          },
+        );
 
       y += 112;
 
       const tableX = margin;
+      const tableW = contentWidth;
       const qtyW = 52;
-      const descW = 298;
       const unitW = 96;
       const totalW = 98;
+      const descW = Math.max(180, tableW - qtyW - unitW - totalW);
       const footerReservedHeight = 56;
-      const startContentY = 160;
+      const startContentY = 170;
       const summarySectionHeight = 122;
       const observationsSectionHeight = 88;
       const observationsTextMaxHeight = 48;
@@ -647,12 +676,12 @@ export class QuotationsService {
       };
 
       const drawTableHeader = () => {
-        doc.rect(tableX, y, qtyW + descW + unitW + totalW, 24).fill('#E8F4FB');
+        doc.rect(tableX, y, tableW, 24).fill('#D99794');
 
         doc
           .font('Helvetica-Bold')
           .fontSize(9)
-          .fillColor('#103A52')
+          .fillColor('#000000')
           .text('CANT.', tableX + 6, y + 7, {
             width: qtyW - 12,
             align: 'center',
@@ -688,15 +717,13 @@ export class QuotationsService {
         }
 
         if (index % 2 === 0) {
-          doc
-            .rect(tableX, y, qtyW + descW + unitW + totalW, rowHeight)
-            .fill('#FBFDFF');
+          doc.rect(tableX, y, tableW, rowHeight).fill('#FFFFFF');
         }
 
         doc
-          .rect(tableX, y, qtyW + descW + unitW + totalW, rowHeight)
+          .rect(tableX, y, tableW, rowHeight)
           .lineWidth(0.5)
-          .strokeColor('#E2E8F0')
+          .strokeColor('#A6A6A6')
           .stroke();
 
         doc
@@ -738,11 +765,11 @@ export class QuotationsService {
       const summaryX = pageWidth - margin - summaryBoxW;
 
       doc
-        .roundedRect(summaryX, y, summaryBoxW, 104, 8)
+        .roundedRect(summaryX, y, summaryBoxW, 108, 8)
         .lineWidth(1)
-        .strokeColor('#C8D7E6')
-        .fillColor('#F7FAFD')
-        .fillAndStroke('#F7FAFD', '#C8D7E6');
+        .strokeColor('#A6A6A6')
+        .fillColor('#F2F2F2')
+        .fillAndStroke('#F2F2F2', '#A6A6A6');
 
       const lineY1 = y + 14;
       const labelW = 122;
@@ -787,13 +814,13 @@ export class QuotationsService {
         .moveTo(summaryX + 12, lineY1 + 62)
         .lineTo(summaryX + summaryBoxW - 12, lineY1 + 62)
         .lineWidth(1)
-        .strokeColor('#B7C8DA')
+        .strokeColor('#A6A6A6')
         .stroke();
 
       doc
         .font('Helvetica-Bold')
         .fontSize(12)
-        .fillColor('#103A52')
+        .fillColor('#000000')
         .text('TOTAL:', summaryX + 12, lineY1 + 72, {
           width: labelW,
           align: 'right',
@@ -803,7 +830,7 @@ export class QuotationsService {
           align: 'right',
         });
 
-      y += 122;
+      y += 126;
       if (y + observationsSectionHeight > pageHeight - footerReservedHeight) {
         doc.addPage();
         drawHeader(false);
@@ -814,7 +841,8 @@ export class QuotationsService {
         .roundedRect(margin, y, contentWidth, 88, 8)
         .lineWidth(1)
         .strokeColor(borderColor)
-        .stroke();
+        .fillColor(cardBgColor)
+        .fillAndStroke(cardBgColor, borderColor);
 
       doc
         .font('Helvetica-Bold')
@@ -843,7 +871,7 @@ export class QuotationsService {
       doc
         .font('Helvetica')
         .fontSize(8.5)
-        .fillColor('#6B7686')
+        .fillColor('#5C5C62')
         .text('NEXT EYE SECURITY - Tu aliado en seguridad', margin, footerY, {
           width: contentWidth,
           align: 'center',

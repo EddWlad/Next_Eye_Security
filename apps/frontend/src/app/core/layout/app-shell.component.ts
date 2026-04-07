@@ -166,6 +166,20 @@ export class AppShellComponent {
                   this.crumbs.set(['Inicio', ...updated]);
                 },
               });
+          } else if (rawChunks[0] === 'quotations') {
+            // Never expose UUID in breadcrumbs for quotation detail/edit/preview.
+            chunks[1] = 'Cotización';
+            this.crumbs.set(['Inicio', ...chunks]);
+
+            this.api
+              .get<{ quotationNumber?: string }>('quotations', rawChunks[1])
+              .subscribe({
+                next: (quotation) => {
+                  const updated = [...chunks];
+                  updated[1] = quotation.quotationNumber || 'Cotización';
+                  this.crumbs.set(['Inicio', ...updated]);
+                },
+              });
           } else {
             this.crumbs.set(['Inicio', ...chunks]);
           }

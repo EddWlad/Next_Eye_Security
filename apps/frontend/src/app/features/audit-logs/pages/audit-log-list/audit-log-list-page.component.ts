@@ -14,6 +14,7 @@ import { AuditLogsService } from '../../services/audit-logs.service';
   standalone: true,
   imports: [NgFor, NgIf, FormsModule, DatePipe, LoadingSpinnerComponent, EmptyStateComponent, PageHeaderComponent, PaginationControlsComponent],
   templateUrl: './audit-log-list-page.component.html',
+  styleUrl: './audit-log-list-page.component.scss',
 })
 export class AuditLogListPageComponent {
   private readonly service = inject(AuditLogsService);

@@ -29,6 +29,7 @@ import { QuotationsService } from '../../services/quotations.service';
     PaginationControlsComponent,
   ],
   templateUrl: './quotations-list-page.component.html',
+  styleUrl: './quotations-list-page.component.scss',
 })
 export class QuotationsListPageComponent {
   private readonly quotationsService = inject(QuotationsService);

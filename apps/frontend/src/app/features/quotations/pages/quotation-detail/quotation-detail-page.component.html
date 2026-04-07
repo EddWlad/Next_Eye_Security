@@ -9,16 +9,16 @@
 
 <app-loading-spinner *ngIf="loading()" />
 
-<section class="card" style="margin-top:.9rem; padding:.95rem;" *ngIf="!loading() && quotation() as quotation">
-  <div class="toolbar" style="align-items:flex-start;">
-    <div>
-      <h3 style="margin:0">{{ quotation.quotationNumber }}</h3>
-      <p style="margin:.25rem 0 0; color:var(--gray-600)">
+<section class="card quotation-detail-card" *ngIf="!loading() && quotation() as quotation">
+  <div class="toolbar quotation-head">
+    <div class="quotation-head-text">
+      <h3>{{ quotation.quotationNumber }}</h3>
+      <p>
         Cliente: {{ quotation.client.nameOrBusinessName }} | Emisión: {{ quotation.issuedAt | date: 'dd/MM/yyyy' }}
       </p>
     </div>
 
-    <div class="actions">
+    <div class="actions quotation-head-actions">
       <a class="btn btn-secondary" [routerLink]="['/quotations', quotation.id, 'pdf-preview']">
         <span class="material-symbols-outlined">picture_as_pdf</span>
         Preview PDF
@@ -31,15 +31,15 @@
     </div>
   </div>
 
-  <div style="margin-top:.6rem; display:flex; align-items:center; gap:.6rem;">
+  <div class="quotation-status-row">
     <app-status-badge [status]="quotation.status" />
-    <select class="select" style="max-width:220px;" [ngModel]="quotation.status" (ngModelChange)="updateStatus($event)">
+    <select class="select quotation-status-select" [ngModel]="quotation.status" (ngModelChange)="updateStatus($event)">
       <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
     </select>
   </div>
 
-  <div class="table-wrapper" style="margin-top:.8rem;">
-    <table class="table">
+  <div class="table-wrapper quotation-details-table">
+    <table class="table quotation-detail-table">
       <thead>
         <tr>
           <th>Tipo</th>
@@ -53,30 +53,30 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of quotation.details">
-          <td>{{ item.itemType }}</td>
-          <td>{{ item.descriptionFrozen }}</td>
-          <td>{{ item.quantity }}</td>
-          <td>{{ money(item.unitPriceFinal, quotation.currency) }}</td>
-          <td>{{ item.vatPercentHistorical }}</td>
-          <td>{{ item.marginPercentHistorical }}</td>
-          <td>{{ money(item.lineTotal, quotation.currency) }}</td>
+          <td data-label="Tipo">{{ item.itemType }}</td>
+          <td data-label="Descripción">{{ item.descriptionFrozen }}</td>
+          <td data-label="Cantidad">{{ item.quantity }}</td>
+          <td data-label="P. Unitario">{{ money(item.unitPriceFinal, quotation.currency) }}</td>
+          <td data-label="IVA %">{{ item.vatPercentHistorical }}</td>
+          <td data-label="Margen %">{{ item.marginPercentHistorical }}</td>
+          <td data-label="Total">{{ money(item.lineTotal, quotation.currency) }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div style="margin-top:.8rem; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem;">
-    <article class="card" style="padding:.75rem;">
+  <div class="quotation-summary-grid">
+    <article class="card quotation-box">
       <strong>Observaciones</strong>
-      <p style="margin:.35rem 0 0; color:var(--gray-600)">{{ quotation.observations || 'Sin observaciones' }}</p>
+      <p class="quotation-muted">{{ quotation.observations || 'Sin observaciones' }}</p>
     </article>
 
-    <article class="card" style="padding:.75rem;">
+    <article class="card quotation-box">
       <strong>Resumen</strong>
-      <p style="margin:.35rem 0;">Subtotal: {{ money(quotation.subtotal, quotation.currency) }}</p>
-      <p style="margin:.35rem 0;">Descuento: {{ money(quotation.discount, quotation.currency) }}</p>
-      <p style="margin:.35rem 0;">IVA: {{ money(quotation.vatValueHistorical, quotation.currency) }}</p>
-      <p style="margin:.35rem 0; font-weight:700;">Total: {{ money(quotation.total, quotation.currency) }}</p>
+      <p>Subtotal: {{ money(quotation.subtotal, quotation.currency) }}</p>
+      <p>Descuento: {{ money(quotation.discount, quotation.currency) }}</p>
+      <p>IVA: {{ money(quotation.vatValueHistorical, quotation.currency) }}</p>
+      <p class="quotation-total">Total: {{ money(quotation.total, quotation.currency) }}</p>
     </article>
   </div>
 </section>
