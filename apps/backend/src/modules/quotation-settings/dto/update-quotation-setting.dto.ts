@@ -3,6 +3,7 @@ import {
   IsArray,
   IsIn,
   IsInt,
+  Matches,
   IsNumberString,
   IsOptional,
   IsString,
@@ -25,12 +26,12 @@ export class UpdateQuotationSettingDto {
   @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
-  @IsIn(['0', '10', '12', '20', '25', '30'], { each: true })
+  @Matches(/^\d+(\.\d+)?$/, { each: true })
   allowedMargins?: string[];
 
   @IsOptional()
   @IsNumberString()
-  @IsIn(['0', '10', '12', '20', '25', '30'])
+  @Matches(/^\d+(\.\d+)?$/)
   defaultMargin?: string;
 
   @IsOptional()

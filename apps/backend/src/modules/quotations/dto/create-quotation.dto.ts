@@ -41,7 +41,6 @@ export class CreateQuotationItemDto {
 
   @IsOptional()
   @IsNumberString()
-  @IsIn(['0', '10', '12', '20', '25', '30'])
   marginPercent?: string;
 }
 
